@@ -1,5 +1,7 @@
 <?php 
-class Table{
+
+if ( ! class_exists( 'WFSETable' ) ) :
+class WFSETable{
 	
 	public static function start($theme = ""){
 		echo "<div class='table-responsive wfesm_msc_table'>"; 
@@ -50,3 +52,4 @@ class Table{
 		echo "</div>"; 
 	}
 }
+endif;

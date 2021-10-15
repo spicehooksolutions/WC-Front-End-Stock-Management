@@ -1,4 +1,7 @@
 <?php
+
+if ( ! class_exists( 'WoocommerceFrontEndStockManagement' ) ) :
+
 class WoocommerceFrontEndStockManagement {
 	private $woocommerce_front_end_stock_management_options;
 
@@ -12,7 +15,7 @@ class WoocommerceFrontEndStockManagement {
 	public function woocommerce_front_end_stock_management_add_plugin_page() {
 		add_menu_page(
 			'Woocommerce Front End Stock Management', // page_title
-			'WFSMP', // menu_title
+			'Front End Stock Management- Settings', // menu_title
 			'manage_options', // capability
 			'woocommerce-front-end-stock-management', // menu_slug
 			array( $this, 'woocommerce_front_end_stock_management_create_admin_page' ), // function
@@ -124,7 +127,7 @@ class WoocommerceFrontEndStockManagement {
 						$product_image_checked = false;
 					}
 
-					$form = new Form( 2, 'post', array( " onsubmit='return false;' " ) ); 
+					$form = new WFSEForm( 2, 'post', array( " onsubmit='return false;' " ) ); 
 
 					$form->init(); 
 					$form->formGroup( "Category", $form->check_box( 'settings-category', $category_checked ) ); 
@@ -312,3 +315,5 @@ if ( is_admin() ){
 	$woocommerce_front_end_stock_management = new WoocommerceFrontEndStockManagement();
 
 }
+
+endif;

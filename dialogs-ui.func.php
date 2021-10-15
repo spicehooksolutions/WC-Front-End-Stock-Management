@@ -1,6 +1,9 @@
 <?php 
 
 add_action( 'wp_footer', 'wfesm_dialogs' );
+
+if (!function_exists('wfesm_dialogs')) {
+
 function wfesm_dialogs(){
 
 	?> 
@@ -81,8 +84,10 @@ function wfesm_dialogs(){
 	/* STARDARD DIALOGS */
 
 	//login dialog
-	$logn_dialog = new Dialog( 'login-dialog' );
-		$logn_dialog->start(); 
+	$logn_dialog = new WFSEDialog( 'login-dialog' );
+		$dialog_start=$logn_dialog->start(); 
+
+		echo $dialog_start;
 		   	// login users
 			if( isset($_POST['wfsmp-login-user']) ){
 				$remember_me = 0;
@@ -109,7 +114,7 @@ function wfesm_dialogs(){
 			}
 
 			echo "<center><h3>Please login to manage your store products</h3></center><br />";
-			$form = new Form( 3 ); 
+			$form = new WFSEForm( 3 ); 
 			$form->init(); 
 			$form->textBox( esc_html('Email /Username'), 'wfsmp-login-user' );
 			$form->textBox( esc_html('Password'), 'wfsmp-login-password', 'password' );
@@ -119,19 +124,27 @@ function wfesm_dialogs(){
 
 			//$form->formGroup( '', '<a href="'.home_url().'">Go to homepage</a>' );
 
-		$logn_dialog->close();
+			$dialog_close=$logn_dialog->close();
+
+			echo $dialog_close;
 
 
 	// view products dilaog
-	$product_details = new Dialog('view-product-details', esc_html('Product Details'), "" , true);
-	$product_details->start(); 
+	$product_details = new WFSEDialog('view-product-details', esc_html('Product Details'), "" , true);
+	
+	$dialog_start=$product_details->start(); 
+
+	echo $dialog_start;
+
 		?> <div class="display-product-details"></div> <?php
-	$product_details->close();
+	$dialog_close=$product_details->close();
+	echo $dialog_close;
 
 
 	// edit products dialog
-	$edit_products_dialog = new Dialog('edit-products-dialog', esc_html('Edit Product'), null, true);
-	$edit_products_dialog->start();
+	$edit_products_dialog = new WFSEDialog('edit-products-dialog', esc_html('Edit Product'), null, true);
+	$dialog_start=$edit_products_dialog->start();
+	echo $dialog_start;
 
 	?>
 		<h4><?php echo esc_html('Update the product');?></h4>
@@ -144,7 +157,9 @@ function wfesm_dialogs(){
 
 
 
-	$edit_products_dialog->close();
+$dialog_close=$edit_products_dialog->close();
+
+echo $dialog_close;
 
 	/*LOADING AND ERROR DIALOGS*/
 
@@ -154,7 +169,7 @@ function wfesm_dialogs(){
 			<div class="dialog-content-nicer" style="background: #FFFF02;">
 				<div class="dialog-body">
 					<div class="dialog-body-nicer">
-						<center><img src="<?php echo PLUGIN_URL; ?>/icons/loader.gif"/ class="loginloader"></center>
+						<center><img src="<?php echo WFESM_PLUGIN_URL; ?>/icons/loader.gif"/ class="loginloader"></center>
 					</div>
 				</div>
 			</div>
@@ -169,7 +184,7 @@ function wfesm_dialogs(){
 		        <div class="dialog-body" style="text-align: center; color: green;">
 		        	<div class="dialog-body-nicer">
 			            <div class="close" data-zoom-out="dialog" data-close="#success">&times;</div>
-			            <img src="<?php echo PLUGIN_URL; ?>/icons/success.png" style="float: left;"/>
+			            <img src="<?php echo WFESM_PLUGIN_URL; ?>/icons/success.png" style="float: left;"/>
 			            <h3><?php echo esc_html('Loading Please Wait ...');?></h3>
 			        </div>
 		        </div>
@@ -185,7 +200,7 @@ function wfesm_dialogs(){
 					<div class="dialog-body">
 						<div class="dialog-body-nicer">
 							<div class="close" data-zoom-out='dialog' data-close='#error'>&times;</div>
-							<center><img src='<?php echo PLUGIN_URL; ?>/icons/alert-triangle-red-32.png' style="float: left;" /> <h3><?php echo esc_html('Something went wrong');?></h3></center>
+							<center><img src='<?php echo WFESM_PLUGIN_URL; ?>/icons/alert-triangle-red-32.png' style="float: left;" /> <h3><?php echo esc_html('Something went wrong');?></h3></center>
 						</div>
 					</div>
 				</div>
@@ -235,6 +250,10 @@ function wfesm_dialogs(){
 
 }
 
+}
+
+if (!function_exists('wfesm_get_year')) {
 function wfesm_get_year(){
 	return "2021";
+}
 }

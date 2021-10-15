@@ -1,5 +1,8 @@
 <?php
 add_action( 'wp_head', 'wfesm_head_scripts' );
+
+if (!function_exists('wfesm_head_scripts')) {
+
 function wfesm_head_scripts( $admin = false ){
 	
 	wp_enqueue_style('wcfsm-datatable-css',plugins_url( '/css/jquery.dataTables.min.css', __FILE__ ));
@@ -13,17 +16,23 @@ function wfesm_head_scripts( $admin = false ){
 
 	wp_enqueue_script( 'wcfsm-custom-js', plugins_url( '/js/wcfsm.custom.js', __FILE__ ), array('jquery') );
 }
+}
 
+if (!function_exists('wfesm_get_primary_color')) {
 
 function wfesm_get_primary_color(){
 	return "#7ad03a"; 
 }
+}
 
-
+if (!function_exists('wfesm_get_dark_color')) {
 function wfesm_get_dark_color(){
 	return "#25A353"; 
 }
+}
 
+if (!function_exists('wfesm_get_text_color')) {
 function wfesm_get_text_color(){
 	return "#FFF";
+}
 }

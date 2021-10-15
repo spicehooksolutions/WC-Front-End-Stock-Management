@@ -1,5 +1,7 @@
 <?php 
-class Dialog{
+if ( ! class_exists( 'WFSEDialog' ) ) :
+
+class WFSEDialog{
 
 
 	const SYSTEM_NAME = 'WooCom';
@@ -48,7 +50,7 @@ class Dialog{
 							<div class="dialog-body-nicer">
 		';
 
-		echo $dialog;
+		return ($dialog);
 	}
 
 	public function close(){
@@ -66,7 +68,7 @@ class Dialog{
 				</div>
 		';
 
-		echo $dialog; 
+		return ($dialog); 
 	}
 
 	static function create_link( array $options ){
@@ -132,3 +134,5 @@ class Dialog{
 
 	}
 }
+
+endif;

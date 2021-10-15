@@ -1,14 +1,17 @@
 <?php 
-class Form{
+
+if ( ! class_exists( 'WFSEForm' ) ) :
+
+class WFSEForm{
 	
 	public $_labelDistance; 
 	private $_method;
 	private $_options;  
 	
-	// $form = new Form(labelDistance, method, theme) -> this one is currently not supported
+	// $form = new WFSEForm(labelDistance, method, theme) -> this one is currently not supported
 	public function __construct($labelDistance = 2, $method = "post", $options = null){
 		// the default method will be post, you can change this when calling your class
-		// $form = new Form(3, "GET", array('onsubmit="return false"', 'another option here'));
+		// $form = new WFSEForm(3, "GET", array('onsubmit="return false"', 'another option here'));
 		$this->_labelDistance = $labelDistance;
 		$this->_method = $method; 
 		$this->_options = $options;
@@ -188,8 +191,8 @@ class Form{
 		if($itShouldShowThePassword){
 			if($type == "password"){
 				$passwordManagerClass = "password-redable"; 
-				$passwordRedable = "<div class='hide-the-password' ><img src='".PLUGIN_URL."/icons/hide-the-password.png' alt='hide the password' title='Hide the password' /></div>"; 
-				$passwordHidden = "<div class='show-the-password'><img src='".PLUGIN_URL."/icons/show-the-password.png' alt='show the password' title='Show the password'  /></div>"; 
+				$passwordRedable = "<div class='hide-the-password' ><img src='".WFESM_PLUGIN_URL."/icons/hide-the-password.png' alt='hide the password' title='Hide the password' /></div>"; 
+				$passwordHidden = "<div class='show-the-password'><img src='".WFESM_PLUGIN_URL."/icons/show-the-password.png' alt='show the password' title='Show the password'  /></div>"; 
 			} else {
 				$passwordManagerClass = ""; 
 				$passwordRedable = ""; 
@@ -539,3 +542,4 @@ class Form{
 
 	
 }
+endif;

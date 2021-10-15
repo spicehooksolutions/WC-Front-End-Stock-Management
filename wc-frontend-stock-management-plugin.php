@@ -3,7 +3,7 @@
   Plugin Name: WC Front End Stock Management
   Plugin URI: https://spicehook.com/
   Description: WC Front End Stock Management - gives you ( Administrator / Shop Manager) to quickly manage the WooCommerce Product Stock Status, Product Stock Quantity, Product Featured Image, Product Categories assignment without entered in WordPress Administration area.  Use the following Shortcode: [wfesm_stock_management]
-  Version: 1.0
+  Version: 1.1
   Author: SpiceHook Solutions
   Author URI: https://profiles.wordpress.org/spicehooksolutions/
   License: GPLv2 or later
@@ -20,11 +20,9 @@ if ( !function_exists( 'add_action' ) ) {
 
 global $wpdb;
 
-define( 'PLUGIN_URL', WP_PLUGIN_URL."/wc-frontend-stock-management-plugin" );
+define( 'WFESM_PLUGIN_URL', WP_PLUGIN_URL."/wc-frontend-stock-management-plugin" );
 
 define('WFESM_VERSION', 10);
-
-define( 'WP_DEBUG', true );
 
 add_action('plugins_loaded', 'wfesm_plugins_update');
 
@@ -37,6 +35,9 @@ require_once dirname(__FILE__)."/classes/Form.class.php";
 require_once dirname(__FILE__)."/classes/WCFrontEndStockManagement.class.php"; 
 
 add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'wfesm_add_plugin_settings_link');
+
+if (!function_exists('wfesm_add_plugin_settings_link')) {
+
 function wfesm_add_plugin_settings_link( $links ) {
 	$links[] = '<a href="' .
 		admin_url( 'admin.php?page=woocommerce-front-end-stock-management
@@ -44,9 +45,13 @@ function wfesm_add_plugin_settings_link( $links ) {
 		'">' . __( '<span style="font-weight: bold; color: #FD7E14;">Settings</span>' ) . '</a>';
 	return $links;
 }
+}
+
+if (!function_exists('wfesm_plugins_update')) {
 
 function wfesm_plugins_update() {
  
+}
 }
 
 /* Uninstall and Activation handlers */
@@ -55,6 +60,8 @@ register_deactivation_hook(__FILE__, 'wfesm_deactivate');
 
 register_uninstall_hook(__FILE__, 'wfesm_deactivate_uninstall');
 
+if (!function_exists('wfesm_activate')) {
+
 function wfesm_activate() {
 
     global $wpdb;
@@ -62,20 +69,28 @@ function wfesm_activate() {
 
 
 }
+}
+
+if (!function_exists('wfesm_deactivate_uninstall')) {
 
 function wfesm_deactivate_uninstall() {
     global $wpdb;
     delete_option('WFESM_VERSION');
 }
+}
+
+if (!function_exists('wfesm_deactivate')) {
 
 function wfesm_deactivate() {
     delete_option('WFESM_VERSION');
 }
 
-
+}
 
 // Create Shortcode wfesm_stock_management
 // Shortcode: [wfesm_stock_management]
+
+if (!function_exists('create_wfesm_stock_management_shortcode')) {
 
 function create_wfesm_stock_management_shortcode()
 {
@@ -292,9 +307,15 @@ jQuery(document).ready( function () {
 return $result;
 	
 }
+
+}
 add_shortcode( 'wfesm_stock_management', 'create_wfesm_stock_management_shortcode' );
 
+
 add_action('wp_head','wfesm_hd_func');
+
+if (!function_exists('wfesm_hd_func')) {
+
 function wfesm_hd_func(){
   if(isset($_POST['wfesm_pid']) && $_POST['wfesm_pid']>0){
     $product = new WC_Product( ($_POST['wfesm_pid']));
@@ -329,11 +350,14 @@ function wfesm_hd_func(){
 
   }
 }
+}
 
 
+add_action( 'wp_footer', 'wfesm_enqueue' );
 
-add_action( 'wp_footer', 'my_enqueue' );
-function my_enqueue($hook) {
+if (!function_exists('wfesm_enqueue')) {
+
+function wfesm_enqueue($hook) {
     
         
 	wp_enqueue_script( 'ajax-script', plugins_url( '/js/wfps.js', __FILE__ ), array('jquery') );
@@ -341,10 +365,14 @@ function my_enqueue($hook) {
 	// in JavaScript, object properties are accessed as ajax_object.ajax_url, ajax_object.we_value
 	wp_localize_script( 'ajax-script', 'ajax_object',array( 'ajax_url' => admin_url( 'admin-ajax.php' )) );
 }
+}
 
 // Same handler function...
 add_action( 'wp_ajax_wfesm_st_update', 'wfesm_st_update' );
 add_action( 'wp_ajax_nopriv_wfesm_st_update', 'wfesm_st_update' );
+
+if (!function_exists('wfesm_st_update')) {
+
 function wfesm_st_update() {
 	global $wpdb;
     $returnval="";
@@ -380,16 +408,21 @@ function wfesm_st_update() {
             //echo  $returnval;
 	wp_die();
 }
-
+}
 
 
 
 add_action( 'wp_enqueue_scripts', 'wfesm_load_dashicons_front_end' );
+
+if (!function_exists('wfesm_load_dashicons_front_end')) {
+
 function wfesm_load_dashicons_front_end() {
   	wp_enqueue_style( 'dashicons' );
 }
+}
 
 
+if (!function_exists('wfesm_get_all_product_categories')) {
 function wfesm_get_all_product_categories( $post_id, $role = 'edit' ){
 
 	
@@ -548,16 +581,24 @@ function wfesm_get_all_product_categories( $post_id, $role = 'edit' ){
 	return $categories_them_all;
 }
 
+}
+
+if (!function_exists('wfesm_indent')) {
 
 function wfesm_indent( $indent = 20 ){
 	return "<span style='margin-right: ".$indent."px; display-inline-block;'></span>";
 }
+}
 
+if (!function_exists('wfesm_get_Q')) {
 
 function wfesm_get_Q( $product ){
 	return $product->get_stock_quantity();
 }
 
+}
+
+if (!function_exists('wfesm_remove_spaces')) {
 
 function wfesm_remove_spaces($str){
   $pattern = '/\s*/m';
@@ -565,7 +606,7 @@ function wfesm_remove_spaces($str){
     $removedLinebaksAndWhitespace = preg_replace( $pattern, $replace,$str);
     return $removedLinebaksAndWhitespace;
 }
-
+}
 
 require_once 'design.func.php';
 require_once 'ajax-actions.php';

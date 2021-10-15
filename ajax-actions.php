@@ -2,20 +2,26 @@
 
 add_action( 'wp_ajax_wfesm_view_product', 'wfesm_view_product' );
 add_action( 'wp_ajax_nopriv_wfesm_view_product', 'wfesm_view_product' );
+
+if (!function_exists('wfesm_view_product')) {
+
 function wfesm_view_product(){
 
-	//@ini_set( 'display_errors', 1 );
 
 	$id = sanitize_text_field($_POST['id']);
 	wfesm_get_product_data( (int)$id );
 
 	wp_die(); 
 }
+}
 
 
 
 add_action( 'wp_ajax_wfesm_trash_product', 'wfesm_trash_product' );
 add_action( 'wp_ajax_nopriv_wfesm_trash_product', 'wfesm_trash_product' );
+
+if (!function_exists('wfesm_trash_product')) {
+
 function wfesm_trash_product(){
 
 	$id  = sanitize_text_field($_POST['id']);
@@ -31,18 +37,25 @@ function wfesm_trash_product(){
 	wp_die();
 }
 
+}
 
 add_action( 'wp_ajax_wfesm_refresh_products', 'wfesm_refresh_products' );
 add_action( 'wp_ajax_nopriv_wfesm_refresh_products', 'wfesm_refresh_products' );
+
+if (!function_exists('wfesm_refresh_products')) {
+
 function wfesm_refresh_products(){
 	echo wfesm_stock_management_refresh_data();
 
 	wp_die();
 }
-
+}
 
 add_action( 'wp_ajax_wfesm_save_admin_optons', 'wfesm_save_admin_optons' );
 add_action( 'wp_ajax_nopriv_wfesm_save_admin_optons', 'wfesm_save_admin_optons' );
+
+if (!function_exists('wfesm_save_admin_optons')) {
+
 function wfesm_save_admin_optons(){
 
 
@@ -59,9 +72,13 @@ function wfesm_save_admin_optons(){
 	wp_die();
 }
 
+}
+
 add_action( 'wp_ajax_wfesm_display_editing', 'wfesm_display_editing' );
 add_action( 'wp_ajax_nopriv_wfesm_display_editing', 'wfesm_display_editing' );
 //add_action( 'wp_footer', 'wfesm_display_editing' );
+
+if (!function_exists('wfesm_display_editing')) {
 
 function wfesm_display_editing(){
 
@@ -74,7 +91,7 @@ function wfesm_display_editing(){
 
      $stock = wfesm_get_stock($product); 
 
-     $form_edit_stock = new Form( 4 ); 
+     $form_edit_stock = new WFSEForm( 4 ); 
 	$form_edit_stock->init(); 
 
 
@@ -115,11 +132,14 @@ function wfesm_display_editing(){
 	wp_die();
 }
 
+}
 
 
 
 add_action( 'wp_ajax_wfesm_save_categories', 'wfesm_save_categories' );
 add_action( 'wp_ajax_nopriv_wfesm_save_categories', 'wfesm_save_categories' );
+
+if (!function_exists('wfesm_save_categories')) {
 
 function wfesm_save_categories(){
 
@@ -142,19 +162,22 @@ function wfesm_save_categories(){
 	wp_die();
 }
 
-
+}
 
 
 add_action( 'wp_ajax_wfesm_update_product_image', 'wfesm_update_product_image' );
 add_action( 'wp_ajax_nopriv_wfesm_update_product_image', 'wfesm_update_product_image' );
+
+if (!function_exists('wfesm_update_product_image')) {
+
 function wfesm_update_product_image(){
 
-	$id = ($_POST['uploading-product-id']); 
+	$id = sanitize_text_field($_POST['uploading-product-id']); 
 
-	$file_name = $_FILES['single-image-uploader']['name'];
-    $file_size = $_FILES['single-image-uploader']['size'];
-    $file_type = $_FILES['single-image-uploader']['type'];
-    $tmpt_name  = $_FILES['single-image-uploader']['tmp_name'];
+	$file_name = sanitize_file_name($_FILES['single-image-uploader']['name']);
+    $file_size = sanitize_text_field($_FILES['single-image-uploader']['size']);
+    $file_type = sanitize_text_field($_FILES['single-image-uploader']['type']);
+    $tmpt_name  = sanitize_text_field($_FILES['single-image-uploader']['tmp_name']);
 
     $allowed_extensions = array("png", "jpg", "jpeg");  
     $extension = pathinfo( $file_name, PATHINFO_EXTENSION );
@@ -228,20 +251,26 @@ function wfesm_update_product_image(){
 	wp_die();
 }
 
+}
 
 add_action( 'wp_ajax_wfesm_update_stock_quanitity', 'wfesm_update_stock_quanitity' );
 add_action( 'wp_ajax_nopriv_wfesm_update_stock_quanitity', 'wfesm_update_stock_quanitity' );
+
+if (!function_exists('wfesm_update_stock_quanitity')) {
+
 function wfesm_update_stock_quanitity(){
-	$product_id = ($_POST['product_id']);
-	$quantity = ($_POST['quantity']);
+	$product_id = sanitize_text_field($_POST['product_id']);
+	$quantity = sanitize_text_field($_POST['quantity']);
 
 	wfesm_save_stock_Q( $product_id, $quantity ); 
 
 	wp_die();
 }
-
+}
 
 /* AJAX FUNCTIONS */
+
+if (!function_exists('wfesm_save_stock_Q')) {
 
 function wfesm_save_stock_Q( $product_id, $quantity ){
 	// Get an instance of the WC_Product object
@@ -265,6 +294,9 @@ function wfesm_save_stock_Q( $product_id, $quantity ){
 
 	echo $quantity; 
 }
+}
+
+if (!function_exists('wfesm_custom_auth')) {
 
 function wfesm_custom_auth( $user, $password, $remember_me ) {
 
@@ -303,6 +335,9 @@ function wfesm_custom_auth( $user, $password, $remember_me ) {
     }
 }
 
+}
+
+if(!function_exists('wfesm_stock_management_refresh_data')) {
 
 function wfesm_stock_management_refresh_data(){
 	ob_start();
@@ -459,6 +494,7 @@ return $result;
 	
 }
 
+}
 
 /**
  * Method to delete Woo Product
@@ -467,6 +503,9 @@ return $result;
  * @param bool $force true to permanently delete product, false to move to trash.
  * @return \WP_Error|boolean
  */
+
+if (!function_exists('wfesm_deleteProduct')) {
+
 function wfesm_deleteProduct($id, $force = FALSE){
     $product = wc_get_product($id);
 
@@ -515,8 +554,9 @@ function wfesm_deleteProduct($id, $force = FALSE){
     }
     return true;
 }
+}
 
-
+if (!function_exists('wfesm_get_product_data')) {
 function wfesm_get_product_data( $id ){
 
 	// image, name, price, stock, short description, categories, long description will be viewable on it's own
@@ -558,13 +598,17 @@ function wfesm_get_product_data( $id ){
 	<?php
 
 }
+}
 
+if (!function_exists('wfesm_get_description')) {
 
 function wfesm_get_description( $product ){
 
 	return nl2br( $product->get_description() );
 }
+}
 
+if (!function_exists('wfesm_get_stock')) {
 
 function wfesm_get_stock( $product ){
 	$id = $product->get_id();
@@ -575,6 +619,9 @@ function wfesm_get_stock( $product ){
 	return "<strong class='out-ofstock' stock-id='$id'>".esc_html("Out of Stock")."</strong>";
 }
 
+}
+
+if (!function_exists('wfesm_is_instock')) {
 
 function wfesm_is_instock( $product ){
 	if ( !$product->managing_stock() && ! $product->is_in_stock() ){
@@ -587,19 +634,23 @@ function wfesm_is_instock( $product ){
 	}
 }
 
+}
 
 /**
  * Returns product price based on sales.
  * 
  * @return string
  */
+
+if (!function_exists('wfesm_get_price')) {
+
 function wfesm_get_price( $product ) {
     /*if( $product->is_on_sale() ) {
         return $product->get_sale_price();
     }*/
     return $product->get_regular_price();
 }
-
+}
 
 
 
@@ -607,11 +658,18 @@ function wfesm_get_price( $product ) {
 
 add_action( 'wp_footer', 'wfesm_ajax_url' );
 add_action( 'admin_footer', 'wfesm_ajax_url' );
+
+
+if (!function_exists('wfesm_ajax_url')) {
+
 function wfesm_ajax_url(){
 	echo '<input type="hidden" id="wfsmp-ajax-url" value="'.admin_url('admin-ajax.php').'" />';
 }
+}
 
 add_action( 'wp_footer', 'wfesm_upload_form' ); 
+
+if (!function_exists('wfesm_upload_form')) {
 
 function wfesm_upload_form(){
 	?> 
@@ -682,10 +740,12 @@ function wfesm_upload_form(){
 	</script>
 	<?php
 
-	$formUpload = new Form( 0, "post", array( "id ='single-images-uploader' style='display: none; ' action='" . PLUGIN_URL . "/product-upload.php' enctype='multipart/form-data' " ) ); 
+	$formUpload = new WFSEForm( 0, "post", array( "id ='single-images-uploader' style='display: none; ' action='" . WFESM_PLUGIN_URL . "/product-upload.php' enctype='multipart/form-data' " ) ); 
 		$formUpload->init(); 
 		$formUpload->textBox( "", "single-image-uploader", "file", "", array( "id='triggered-single-image-upload'" ) ); 
 		$formUpload->textBox( "", "uploading-product-id", 'text', '' ); 
 		$formUpload->textBox( "", "action", 'text', 'wfesm_update_product_image' ); 
 		$formUpload->close("Upload", 'upload-product-btn');	
+}
+
 }
