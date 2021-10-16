@@ -29,7 +29,7 @@ class WFSEForm{
 				$form .= " >";
 			}
 
-			echo $form; 
+			return $form; 
 
 	}
 	
@@ -68,7 +68,7 @@ class WFSEForm{
 		";  
 		}
 
-		echo $html; 
+		return $html; 
 	}
 
 	function textBox_( $label, array $options, $form_group_options = null,  $itShouldShowThePassword = true ){
@@ -234,7 +234,7 @@ class WFSEForm{
 			
 		";
 		
-		echo $formData; 
+		return $formData; 
 		}
 		
 	}
@@ -259,7 +259,7 @@ class WFSEForm{
 			</div> 
 		";
 		
-		echo $select; 
+		return $select; 
 
 	}
 
@@ -305,7 +305,7 @@ class WFSEForm{
 		
 		}
 
-		echo $select; 
+		return $select; 
 
 	}
 
@@ -331,7 +331,7 @@ class WFSEForm{
 			</div> 
 		";
 		
-		echo $select; 
+		return $select; 
 	}
 	
 	public function textarea($label, $name, $value = "", $additionalArgs = null){
@@ -359,7 +359,7 @@ class WFSEForm{
 					</div> 
 				</div> ";
 
-			echo $textarea;
+			return $textarea;
 		}
 	}
 
@@ -393,7 +393,7 @@ class WFSEForm{
 			";
 		}
 
-		echo $data;
+		return $data;
 	}
 	
 	// form must be closed after it's initialized
@@ -420,7 +420,7 @@ class WFSEForm{
 				</div> 
 			</div> 
 		";
-		echo "</form>"; 
+		return "</form>"; 
 		}
 	}
 
@@ -528,13 +528,13 @@ class WFSEForm{
 			foreach ($items as $key => $value) {
 				$lastItem = $key + 1;
 				if($lastItem == $arrayItems){
-					$dataToPass .= ($_POST[''.$value.'']);
+					$dataToPass .= sanitize_text_field($_POST[''.$value.'']);
 				} else {
-					$dataToPass .= ($_POST[''.$value.'']).", "; 
+					$dataToPass .= sanitize_text_field($_POST[''.$value.'']).", "; 
 				}
 			}
 
-			echo "<?php $callBackFunction($dataToPass); ?>";
+			return "<?php $callBackFunction($dataToPass); ?>";
 		}
 	} 
 

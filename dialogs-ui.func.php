@@ -93,7 +93,7 @@ function wfesm_dialogs(){
 				$remember_me = 0;
 
 				$user = sanitize_text_field($_POST['wfsmp-login-user']);
-				$password = ($_POST['wfsmp-login-password']);
+				$password = sanitize_text_field($_POST['wfsmp-login-password']);
 				$rem_checkbox = sanitize_text_field($_POST['wfsmp-login-rem-me']);
 
 				if( isset( $rem_checkbox ) ){
@@ -115,12 +115,12 @@ function wfesm_dialogs(){
 
 			echo "<center><h3>Please login to manage your store products</h3></center><br />";
 			$form = new WFSEForm( 3 ); 
-			$form->init(); 
-			$form->textBox( esc_html('Email /Username'), 'wfsmp-login-user' );
-			$form->textBox( esc_html('Password'), 'wfsmp-login-password', 'password' );
-			$form->formGroup( esc_html('Remember me'), $form->check_box( 'wfsmp-login-rem-me', true ) );
-			$form->formGroup( '', '<a href="'.wp_lostpassword_url().'" target="_blank">'.esc_html('Forgot Passowrd?').'</a>' );
-			$form->close( esc_html('Login') ); 
+			echo $form->init(); 
+			echo $form->textBox( esc_html('Email /Username'), 'wfsmp-login-user' );
+			echo $form->textBox( esc_html('Password'), 'wfsmp-login-password', 'password' );
+			echo $form->formGroup( esc_html('Remember me'), $form->check_box( 'wfsmp-login-rem-me', true ) );
+			echo $form->formGroup( '', '<a href="'.wp_lostpassword_url().'" target="_blank">'.esc_html('Forgot Passowrd?').'</a>' );
+			echo $form->close( esc_html('Login') ); 
 
 			//$form->formGroup( '', '<a href="'.home_url().'">Go to homepage</a>' );
 

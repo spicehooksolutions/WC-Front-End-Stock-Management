@@ -378,7 +378,7 @@ function wfesm_st_update() {
     $returnval="";
             if(isset($_POST['wfesm_pid']) && $_POST['wfesm_pid']>0)
             {
-            $product = new WC_Product( $_POST['wfesm_pid']);
+            $product = new WC_Product( sanitize_text_field($_POST['wfesm_pid']));
         
             $stock_quantity = $product->get_stock_quantity();
             $stock_status   = $product->get_stock_status();

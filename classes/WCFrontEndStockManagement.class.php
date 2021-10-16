@@ -129,15 +129,15 @@ class WoocommerceFrontEndStockManagement {
 
 					$form = new WFSEForm( 2, 'post', array( " onsubmit='return false;' " ) ); 
 
-					$form->init(); 
-					$form->formGroup( "Category", $form->check_box( 'settings-category', $category_checked ) ); 
-					$form->formGroup( "Stock Status", $form->check_box( 'settings-stock', $stock_checked ) ); 
-					$form->formGroup( "Product Image", $form->check_box( 'settings-prod-image', $product_image_checked ) ); 
+					echo $form->init(); 
+					echo $form->formGroup( "Category", $form->check_box( 'settings-category', $category_checked ) ); 
+					echo $form->formGroup( "Stock Status", $form->check_box( 'settings-stock', $stock_checked ) ); 
+					echo $form->formGroup( "Product Image", $form->check_box( 'settings-prod-image', $product_image_checked ) ); 
 
-					$form->formGroup( "Quantity", $form->check_box( 'settings-prod-quantity', $this->is_quantity_allowed() ) ); 
+					echo $form->formGroup( "Quantity", $form->check_box( 'settings-prod-quantity', $this->is_quantity_allowed() ) ); 
 
 					//quantity
-					$form->formGroup( "<input type='submit' name='save-settings' value='Save' class='wfsmp-btn wfsmp-btn-primary' style='cursor: pointer;' />", '' ); 
+					echo $form->formGroup( "<input type='submit' name='save-settings' value='Save' class='wfsmp-btn wfsmp-btn-primary' style='cursor: pointer;' />", '' ); 
 
 					
 				?>

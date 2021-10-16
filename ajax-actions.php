@@ -92,7 +92,7 @@ function wfesm_display_editing(){
      $stock = wfesm_get_stock($product); 
 
      $form_edit_stock = new WFSEForm( 4 ); 
-	$form_edit_stock->init(); 
+	 echo $form_edit_stock->init(); 
 
 
      if( $settings->is_product_image_allowed() ):
@@ -103,23 +103,23 @@ function wfesm_display_editing(){
 
 
 		
-		$form_edit_stock->formGroup( 'Product Image', '<a href="" class="upload-edit-product-image-trigger wfsmp-btn"><span class="dashicons dashicons-upload"></span> '.esc_html('Click to Update').'</a>' );
+		echo $form_edit_stock->formGroup( 'Product Image', '<a href="" class="upload-edit-product-image-trigger wfsmp-btn"><span class="dashicons dashicons-upload"></span> '.esc_html('Click to Update').'</a>' );
 	endif;
 
 	if( $settings->is_category_allowed() ):
-		$form_edit_stock->formGroup( 'Categories', wfesm_get_all_product_categories( $id ) );
+		echo $form_edit_stock->formGroup( 'Categories', wfesm_get_all_product_categories( $id ) );
 	endif;
 
 
 	if( $settings->is_stock_allowed() ):
 		if( wfesm_is_instock( $product ) )
-			$form_edit_stock->formGroup( 'Stock', ' <a href="" class="stock-toggle wfsmp-btn-primary wfsmp-btn" data-product="'.$id.'"  data-stock-id="' . $product_id . '" >'.$stock.' - '.esc_html('Click to Update').'</a>  ' );
+		echo $form_edit_stock->formGroup( 'Stock', ' <a href="" class="stock-toggle wfsmp-btn-primary wfsmp-btn" data-product="'.$id.'"  data-stock-id="' . $product_id . '" >'.$stock.' - '.esc_html('Click to Update').'</a>  ' );
 		else
-			$form_edit_stock->formGroup( 'Stock', ' <a href="" class="stock-toggle wfsmp-btn-danger wfsmp-btn" data-product="'.$id.'" data-stock-id="' . $product_id . '" >'.$stock.' - '.esc_html('Click to Update').'</a> ' );
+		echo $form_edit_stock->formGroup( 'Stock', ' <a href="" class="stock-toggle wfsmp-btn-danger wfsmp-btn" data-product="'.$id.'" data-stock-id="' . $product_id . '" >'.$stock.' - '.esc_html('Click to Update').'</a> ' );
 		
 	endif; 
 
-	$form_edit_stock->close( '' );
+	echo $form_edit_stock->close( '' );
 
 
 	if( !$settings->is_product_image_allowed() && !$settings->is_stock_allowed() && !$settings->is_category_allowed() ){
@@ -741,11 +741,11 @@ function wfesm_upload_form(){
 	<?php
 
 	$formUpload = new WFSEForm( 0, "post", array( "id ='single-images-uploader' style='display: none; ' action='" . WFESM_PLUGIN_URL . "/product-upload.php' enctype='multipart/form-data' " ) ); 
-		$formUpload->init(); 
-		$formUpload->textBox( "", "single-image-uploader", "file", "", array( "id='triggered-single-image-upload'" ) ); 
-		$formUpload->textBox( "", "uploading-product-id", 'text', '' ); 
-		$formUpload->textBox( "", "action", 'text', 'wfesm_update_product_image' ); 
-		$formUpload->close("Upload", 'upload-product-btn');	
+		echo $formUpload->init(); 
+		echo $formUpload->textBox( "", "single-image-uploader", "file", "", array( "id='triggered-single-image-upload'" ) ); 
+		echo $formUpload->textBox( "", "uploading-product-id", 'text', '' ); 
+		echo $formUpload->textBox( "", "action", 'text', 'wfesm_update_product_image' ); 
+		echo $formUpload->close("Upload", 'upload-product-btn');	
 }
 
 }
